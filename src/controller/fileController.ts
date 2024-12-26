@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import uploadMiddleWare from "../middlewares/fileUpload";
 
 export const getHealth = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -15,35 +14,26 @@ export const getHealth = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-export const uploadZIP = async (req: Request , res: Response): Promise<any> => {
-    try{
-        uploadMiddleWare(req, res, (err) => {
-            if(err) {
-                if(err.code === "INVALID_FILE_TYPE"){
-                    return res.status(400).json({
-                        success: true,
-                        message: "Invalid type"
-                    })
-                }
-            }
 
-            if(!req.file){
-                if (!req.file) {
-                    return res.status(400).json({
-                      success: false,
-                      message: "No file uploaded",
-               });
-            }
+export const uploadZip = (req: Request, res: Response): any => {
+  if (!req.file) {
+    return res.status(400).json({
+      success: false,
+      message: "No file uploaded",
+    });
+  }
 
-            return res.status(201).json({
-                success: true,
-                message: "File uploaded successfully✅"
-            })
-        })
-    }catch(error){
-        return res.status(400).json({
-            success: false,
-            message: "Error Uploading file ❌"
-        })
-    }
+  return res.status(200).json({
+    success: true,
+    message: "File uploaded successfully",
+    file: {
+      filename: req.file.filename,
+      path: req.file.path,
+      size: req.file.size,
+    },
+  });
+};
+
+export const unZIP = (req: Request, res:Response): any => {
+    
 }
