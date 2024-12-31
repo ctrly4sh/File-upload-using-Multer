@@ -15,13 +15,16 @@ export const getHealth = async (req: Request, res: Response): Promise<any> => {
 };
 
 
-export const uploadZip = (req: Request, res: Response): any => {
+export const unZIP = (req: Request, res: Response): any => {
+
   if (!req.file) {
     return res.status(400).json({
       success: false,
       message: "No file uploaded",
     });
   }
+
+  
 
   return res.status(200).json({
     success: true,
@@ -34,6 +37,3 @@ export const uploadZip = (req: Request, res: Response): any => {
   });
 };
 
-export const unZIP = (req: Request, res:Response): any => {
-    
-}
